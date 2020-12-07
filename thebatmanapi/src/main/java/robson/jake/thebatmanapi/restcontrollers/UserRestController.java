@@ -1,6 +1,7 @@
 package robson.jake.thebatmanapi.restcontrollers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,8 +17,12 @@ public class UserRestController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private PasswordEncoder passEnc;
+	
 	@RequestMapping(path="", method=RequestMethod.POST)
 	public void createPersonEntry(@RequestBody User user) {
+		user.setPassword(passEnc.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 

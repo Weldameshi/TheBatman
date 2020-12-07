@@ -40,8 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@PostConstruct
 	private void initUser() {
 		List<User> allUsers = userRepository.findAll();
+		users.put("admin", new User("admin", passwordEncoder().encode("admin")));
 		for(User u : allUsers) {
-			u.setPassword(passwordEncoder().encode(u.getPassword()));
 			users.put(u.getUsername(), u);
 		}
 	}
@@ -60,6 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+		.antMatchers("/index.html", "/").permitAll() 
 		.antMatchers(HttpMethod.GET, "/**").permitAll()
 		.antMatchers("/").anonymous()
 		.antMatchers("/login").permitAll()
@@ -72,16 +73,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.and().sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
-        .formLogin()
-        .successHandler(new AuthSuccessHandler())
-        .failureHandler(authenticationFailureHandler())
-        .permitAll()
-        .and()
-        .logout()
-        .logoutSuccessHandler(logoutSuccessHandler())
-        .invalidateHttpSession(true)
-        .permitAll()
-		.and()
+				/*
+				 * .formLogin() .successHandler(new AuthSuccessHandler())
+				 * .failureHandler(authenticationFailureHandler()) .permitAll() .and() .logout()
+				 * .logoutSuccessHandler(logoutSuccessHandler()) .invalidateHttpSession(true)
+				 * .permitAll() .and()
+				 */
 		.csrf().disable()
 		.httpBasic();
 	}
@@ -99,12 +96,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	 * @Bean public AuthSuccessHandler authSuccessHandler() { return new
 	 * AuthSuccessHandler(); }
 	 */
-	@Bean
-	public SimpleUrlAuthenticationFailureHandler authenticationFailureHandler() {
-		return new SimpleUrlAuthenticationFailureHandler();
-	}
-	@Bean
-	public LogoutSuccess logoutSuccessHandler() {
-		return new LogoutSuccess();
-	}
+	/*
+	 * @Bean public SimpleUrlAuthenticationFailureHandler
+	 * authenticationFailureHandler() { return new
+	 * SimpleUrlAuthenticationFailureHandler(); }
+	 * 
+	 * @Bean public LogoutSuccess logoutSuccessHandler() { return new
+	 * LogoutSuccess(); }
+	 */
 }
