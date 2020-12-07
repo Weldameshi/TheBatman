@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Batman</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <h1><b>Batman API</b></h1>
+    <div id="everything_div">
+    	<div id="login">
+
+                <label>UserName</label>
+                <br>
+                <input type='text' id='login_username' placeholder="Username">
+                <br>
+                <label>Password</label>
+                <br>
+                <input type='password' id='login_password' placeholder="Password"/>
+                <br>
+    		<button onclick="login();">login</button>
+
+        </div>
+        <div id="logout">
+            <button onclick="logout();">logout</button>
+        </div>
+        <div>
+            <br />
+    		<br />
+            <button onclick="showPeopleDiv();">People</button>
+            <button onclick="showTechDiv();">Tech</button>
+            <button onclick="showLairDiv();">Lairs</button>
+            <button onclick="showVehicleDiv();">Vehicles</button>
+            <button onclick="showUserDiv();">Users</button>
+            <br />
+            <br />
+        </div>
+        <div id="people_div" style="display: none;">
+            <button onclick="showObject('people');">Show All People</button>
+            <div id="people_list">
+
+            </div>
+            <br />
+            <form onsubmit="return false;">
+                <label>Search Person by ID</label>
+                <br>
+                <input type="text" id="person_search_id">
+                <br />
+
+                <button onclick="getObjectById('people');">Search</button>
+            </form>
+            <br />
+            <form onsubmit="return false;">
+                <label>Add or Update Person</label>
+                <br>
+                <input type="text" id="person_create_id" placeholder="ID">
+                <br />
+                <br />
+                <input type="text" id="firstName" placeholder="First Name">
+                <br />
+                <br />
+                <input type="text" id="lastName" placeholder="Last Name">
+                <br />
+                <br />
+                <input type="text" id="ailias" placeholder="Ailias">
+                <br />
+                <br />
+                <input type="text" id="classification" placeholder="Classification ex: Superhero">
+                <br />
+                <br />
+                <button onclick="addListItem('ability');">Add Ability</button>
+                <div id="abilityList">
+                </div>
+                <br />
+                <button onclick="createPerson();">Create or Update Person</button>
+                <br />
+                <br />
+            </form>
+            <form onsubmit="return false;">
+                <label>Delete Person by ID</label>
+                <br>
+                <input type="text" id="people_delete_id">
+                <br />
+                <button onclick="deleteObject('people');">Delete</button>
+            </form>
+            <br />
+            <br />
+        </div>
+
+        <div id="tech_div" style="display: none;">
+            <button onclick="showObject('tech');">Show All Tech</button>
+            <div id="tech_list">
+
+            </div>
+            <br />
+            <form onsubmit="return false;">
+                <label>Search Tech by ID</label>
+                <br>
+                <input type="text" id="tech_search_id">
+                <br />
+
+                <button onclick="getObjectById('tech');">Search</button>
+            </form>
+            <br />
+            <form onsubmit="return false;">
+                <label>Add or Update Tech</label>
+                <br>
+                <input type="text" id="tech_create_id" placeholder="ID">
+                <br />
+                <br />
+                <input type="text" id="tech_name" placeholder="Name">
+                <br />
+                <br />
+                <button onclick="addListItem('functions');">Add Function</button>
+                <div id="functionsList">
+                </div>
+                <br />
+                <button onclick="createTech();">Create or Update Tech</button>
+                <br />
+                <br />
+            </form>
+            <form onsubmit="return false;">
+                <label>Delete Tech by ID</label>
+                <br>
+                <input type="text" id="tech_delete_id">
+                <br />
+                <button onclick="deleteObject('tech');">Delete</button>
+            </form>
+            <br />
+            <br />
+        </div>
+
+        <div id="lair_div" style="display: none;">
+            <button onclick="showObject('lair');">Show All Lairs</button>
+            <div id="lair_list">
+
+            </div>
+            <br />
+            <form onsubmit="return false;">
+                <label>Search Lair by ID</label>
+                <br>
+                <input type="text" id="lair_search_id">
+                <br />
+
+                <button onclick="getObjectById('lair');">Search</button>
+            </form>
+            <br />
+            <form onsubmit="return false;">
+                <label>Add or Update Lair</label>
+                <br>
+                <input type="text" id="lair_create_id" placeholder="ID">
+                <br />
+                <br />
+                <input type="text" id="lair_name" placeholder="Name">
+                <br />
+                <br />
+                <input type="number" id="sqrft" placeholder="Square Ft">
+                <br />
+                <br />
+                <button onclick="addListItem('traps');">Add Trap</button>
+                <div id="trapsList">
+                </div>
+                <br />
+                <button onclick="createLair();">Create or Update Tech</button>
+                <br />
+                <br />
+            </form>
+            <form onsubmit="return false;">
+                <label>Delete Lair by ID</label>
+                <br>
+                <input type="text" id="lair_delete_id">
+                <br />
+                <button onclick="deleteObject('lair');">Delete</button>
+            </form>
+            <br />
+            <br />
+        </div>
+
+        <div id="vehicle_div" style="display: none;">
+            <button onclick="showObject('vehicle');">Show All Vehicles</button>
+            <div id="vehicle_list">
+
+            </div>
+            <br />
+            <form onsubmit="return false;">
+                <label>Search Vehicle by ID</label>
+                <br>
+                <input type="text" id="vehicle_search_id">
+                <br />
+
+                <button onclick="getObjectById('vehicle');">Search</button>
+            </form>
+            <br />
+            <form onsubmit="return false;">
+                <label>Add or Update Vehicle</label>
+                <br>
+                <input type="text" id="vehicle_create_id" placeholder="ID">
+                <br />
+                <br />
+                <input type="text" id="vehicle_name" placeholder="Name">
+                <br />
+                <br />
+                <input type="number" id="mph" placeholder="MPH">
+                <br />
+                <br />
+                <button onclick="addListItem('capabilities');">Add Capability</button>
+                <div id="capabilitiesList">
+                </div>
+                <br />
+                <button onclick="createVehicle();">Create or Update Vehicle</button>
+                <br />
+                <br />
+            </form>
+            <form onsubmit="return false;">
+                <label>Delete Vehicle by ID</label>
+                <br>
+                <input type="text" id="vehicle_delete_id">
+                <br />
+                <button onclick="deleteObject('vehicle');">Delete</button>
+            </form>
+            <br />
+            <br />
+        </div>
+        
+    	<div id="user_div" style="display: none;">
+            <form onsubmit="return false;">
+                <label>Add User</label>
+                <br />
+                <input type="text" id="user_create_id" placeholder="ID">
+                <br />
+                <br />
+                <input type="text" id="username" placeholder="UserName">
+                <br />
+                <br />
+                <input type="text" id="password" placeholder="PassWord">
+                <br />
+                <br />
+                <button onclick="addListItem('authorities');">Add Authority</button>
+                <div id="authoritiesList">
+                </div>
+                <br>
+                <button onclick="createUser();">Create User</button>
+                <br />
+                <br />
+            </form>
+            <form onsubmit="return false;">
+                <label>Delete User by UserName</label>
+                <br>
+                <input type="text" id="user_delete_username">
+                <br />
+                <button onclick="deleteUser();">Delete</button>
+            </form>
+            <br />
+            <br />
+            </div>
+    </div>
+</body>
+
+</html>
