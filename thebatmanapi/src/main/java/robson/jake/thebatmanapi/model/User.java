@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document(collection = "user")
 public class User implements UserDetails{
 	
@@ -32,6 +34,7 @@ public class User implements UserDetails{
 		this.authorities.addAll(Arrays.asList(authorities));
 	}
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities.stream()
 				.map(s -> new GrantedAuthority() {
