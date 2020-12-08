@@ -45,6 +45,17 @@ function showUserDiv(){
 	clearAllCreateData();
 	clearAllSearchData();
 }
+function showNoDiv(){
+	document.getElementById('vehicle_div').style.display = "none";
+    document.getElementById('lair_div').style.display = "none";
+    document.getElementById('tech_div').style.display = "none";
+	document.getElementById('people_div').style.display = "none";
+	document.getElementById('user_div').style.display = "none";
+
+	clearAllCreateData();
+	clearAllSearchData();
+}
+var authHeaderValue = null;
 function createPerson(){
 	var id = document.getElementById('person_create_id').value;
 	var firstName = document.getElementById('firstName').value;
@@ -68,9 +79,18 @@ function createPerson(){
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("POST", "http://localhost:8080/people");
 	xmlHttp.setRequestHeader('Content-type', 'application/json');
-	xmlHttp.onreadystatchange = function(){
-		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-			printObject(person, "people");
+	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE){
+			if(this.status === 403){
+				alert("unauthroized user can not create user");
+			}
+			if(this.status === 401){
+				alert("Must log in to create vehicle")
+			}
+			if(this.status === 200){
+				console.log("Success");
+			}
 		}
 	}
 	xmlHttp.send(JSON.stringify(person));
@@ -81,6 +101,7 @@ function clearAllCreateData(){
 	clearLairsCreateData();
 	clearTechCreateData();
 	clearVehiclesCreateData();
+	clearUserCreateData();
 }
 function clearPersonCreateData(){
 	document.getElementById('person_create_id').value = "";
@@ -107,7 +128,6 @@ function clearVehiclesCreateData(){
 	document.getElementById('vehicle_name').value = "";
 	document.getElementById('mph').value = "";
     document.getElementById("capabilitiesList").innerHTML = "";
-
 }
 function clearUserCreateData(){
 	document.getElementById('user_create_id').value = "";
@@ -139,9 +159,18 @@ function createTech(){
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("POST", "http://localhost:8080/tech");
 	xmlHttp.setRequestHeader('Content-type', 'application/json');
-	xmlHttp.onreadystatchange = function(){
-		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-			console.log("Success");
+	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE){
+			if(this.status === 403){
+				alert("unauthroized user can not create user");
+			}
+			if(this.status === 401){
+				alert("Must log in to create vehicle")
+			}
+			if(this.status === 200){
+				console.log("Success");
+			}
 		}
 	}
 	xmlHttp.send(JSON.stringify(tech));
@@ -168,9 +197,18 @@ function createLair(){
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("POST", "http://localhost:8080/lair");
 	xmlHttp.setRequestHeader('Content-type', 'application/json');
-	xmlHttp.onreadystatchange = function(){
-		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-			console.log("Success");
+	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE){
+			if(this.status === 403){
+				alert("unauthroized user can not create user");
+			}
+			if(this.status === 401){
+				alert("Must log in to create vehicle")
+			}
+			if(this.status === 200){
+				console.log("Success");
+			}
 		}
 	}
 	xmlHttp.send(JSON.stringify(lair));
@@ -197,7 +235,8 @@ function createVehicle(){
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("POST", "http://localhost:8080/vehicle");
 	xmlHttp.setRequestHeader('Content-type', 'application/json');
-	xmlHttp.onreadystatchange = function(){
+	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
+	xmlHttp.onreadystatechange = function(){
 		if(this.readyState == XMLHttpRequest.DONE){
 			if(this.status === 403){
 				alert("unauthroized user can not create user");
@@ -234,6 +273,7 @@ function createUser(){
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("POST", "http://localhost:8080/user");
 	xmlHttp.setRequestHeader('Content-type', 'application/json');
+	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
 	xmlHttp.onreadystatechange = function(){
 		if(this.readyState == XMLHttpRequest.DONE){
 			if(this.status === 403){
@@ -255,6 +295,7 @@ function deleteObject(objectType){
 	xmlHttp.open("DELETE", "http://localhost:8080/"+ objectType +"/" 
 	+ document.getElementById(objectType +'_delete_id').value, true);
 	xmlHttp.setRequestHeader('Content-type', 'application/json');
+	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
 	xmlHttp.send();
 	clearAllSearchData();
 }
@@ -297,24 +338,19 @@ function addListItem(listType){
 }
 
 function login(){
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function(){
-		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-			var ob = JSON.parse(this.responseText);
-			printObject(ob, objectType);
-		}
-	}
-	xmlHttp.open("POST", "http://localhost:8080/login");
-	xmlHttp.send(document.getElementById("login_username").value, document.getElementById("login_password"));
+	var username = document.getElementById('login_username').value
+	var password = document.getElementById('login_password').value
+	authHeaderValue = "Basic " + btoa(username + ":" + password)
+
+	document.getElementById("buttons").style.display = "block";
+	document.getElementById("login").style.display = "none";
+
 }
 function logout(){
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function(){
-		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-			var ob = JSON.parse(this.responseText);
-			printObject(ob, objectType);
-		}
-	}
-	xmlHttp.open("get", "http://localhost:8080/logout");
+authHeaderValue = null;
+
+document.getElementById("login").style.display = "block";
+document.getElementById("buttons").style.display = "none";
+showNoDiv();
 }
   

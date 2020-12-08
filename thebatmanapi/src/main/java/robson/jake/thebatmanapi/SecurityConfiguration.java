@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@PostConstruct
 	private void initUser() {
 		List<User> allUsers = userRepository.findAll();
-		users.put("admin", new User("admin", passwordEncoder().encode("admin")));
+		users.put("admin", new User("admin", passwordEncoder().encode("admin"), "ADMIN", "USER"));
 		for(User u : allUsers) {
 			users.put(u.getUsername(), u);
 		}
