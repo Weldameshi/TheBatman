@@ -12,18 +12,20 @@ import robson.jake.thebatmanapi.repository.UserRepository;
 
 @RestController
 @RequestMapping("/user")
-public class UserRestController {
-
+public class UserRestController{
+	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
-	private PasswordEncoder passEnc;
+	PasswordEncoder encoder;
 	
 	@RequestMapping(path="", method=RequestMethod.POST)
-	public void createPersonEntry(@RequestBody User user) {
-		user.setPassword(passEnc.encode(user.getPassword()));
+	public String createUser(@RequestBody User user) {
+		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
+		return user.get_id();
+		
 	}
 
 }
