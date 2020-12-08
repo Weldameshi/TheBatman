@@ -1,10 +1,14 @@
 package robson.jake.thebatmanapi.model;
 
 import java.util.ArrayList;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
-@Document(collection = "people")
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Person{
 
 	@Id private String _id;
@@ -16,6 +20,12 @@ public class Person{
 	private String ailias;
 	
 	private String classification;
+	
+	@ManyToMany
+	private List<Lair> lairs = new ArrayList<>();
+	
+	@OneToMany(mappedBy="person")
+	private List<Vehicle> vehicles = new ArrayList<>();
 	
 	private ArrayList<String> abilities = new ArrayList<>();
 	
@@ -65,6 +75,22 @@ public class Person{
 
 	public void setAbilities(ArrayList<String> abilities) {
 		this.abilities = abilities;
+	}
+
+	public List<Lair> getLairs() {
+		return lairs;
+	}
+
+	public void setLairs(List<Lair> lairs) {
+		this.lairs = lairs;
+	}
+
+	public List<Vehicle> getVehicles() {
+		return vehicles;
+	}
+
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 
 

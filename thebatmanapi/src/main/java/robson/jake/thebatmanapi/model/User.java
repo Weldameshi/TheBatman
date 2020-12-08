@@ -6,22 +6,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Document(collection = "user")
+@Entity
 public class User implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
-
-	@Id private String _id;
 	
+	@Id
 	private String username;
 	
+	@Column(nullable=false)
 	private String password;
 	
 	private List<String> authorities = new ArrayList<>();
@@ -77,13 +79,6 @@ public class User implements UserDetails{
 		return true;
 	}
 
-	public String get_id() {
-		return _id;
-	}
-
-	public void set_id(String _id) {
-		this._id = _id;
-	}
 
 	public void setUsername(String username) {
 		this.username = username;

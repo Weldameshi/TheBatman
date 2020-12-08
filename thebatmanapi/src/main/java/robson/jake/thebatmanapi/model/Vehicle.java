@@ -2,10 +2,11 @@ package robson.jake.thebatmanapi.model;
 
 import java.util.ArrayList;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Document(collection = "vehicle")
+
+@Entity
 public class Vehicle {
 	
 	@Id private String _id;
@@ -14,6 +15,8 @@ public class Vehicle {
 	private String name;
 	
 	private int mph;
+	
+	private Person person;
 	
 	private ArrayList<String> capabilities = new ArrayList<>();
 	
@@ -46,6 +49,14 @@ public class Vehicle {
 
 	public void setCapabilities(ArrayList<String> capabilities) {
 		this.capabilities = capabilities;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 	
 }

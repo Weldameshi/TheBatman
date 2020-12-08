@@ -24,7 +24,7 @@ public class UserRestController{
 	public String createUser(@RequestBody User user) {
 		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
-		return user.get_id();
+		return user.getUsername();
 		
 	}
 

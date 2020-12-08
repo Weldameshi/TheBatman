@@ -26,24 +26,27 @@ public class PeopleRestController{
 		peopleRepository.save(person);
 		return person.get_id();
 	}
+	
 	@RequestMapping(path="", method=RequestMethod.PATCH)
 	public String updatePersonEntry(@RequestBody Person person) {
 		peopleRepository.deleteById(person.get_id());
 		peopleRepository.save(person);
 		return person.get_id();
-		
 	}
-	
+
 	@RequestMapping(path="" , method=RequestMethod.GET)
 	public List<Person> findAll(){
 		return peopleRepository.findAll();
 	}
+	
 	@RequestMapping(path="/{id}" , method=RequestMethod.GET)
 	public Optional<Person> findById(@PathVariable String id){
 		return peopleRepository.findById(id);
 	}
+	
 	@RequestMapping(path="/{id}" , method=RequestMethod.DELETE)
 	public void deleteById(@PathVariable String id){
 		peopleRepository.deleteById(id);
 	}
+	
 }

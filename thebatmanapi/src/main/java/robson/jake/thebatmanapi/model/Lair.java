@@ -1,11 +1,14 @@
 package robson.jake.thebatmanapi.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
-@Document(collection = "lair")
+
+@Entity
 public class Lair {
 
 	@Id private String _id;
@@ -13,6 +16,9 @@ public class Lair {
 	private String name;
 	
 	private int sqrft;
+	
+	@ManyToMany(mappedBy="lairs")
+	private List<Person> peopleWhoLiveInLair = new ArrayList<Person>();
 	
 	private ArrayList<String> traps = new ArrayList<String>();
 	

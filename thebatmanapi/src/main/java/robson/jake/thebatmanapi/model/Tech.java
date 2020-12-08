@@ -2,10 +2,11 @@ package robson.jake.thebatmanapi.model;
 
 import java.util.ArrayList;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Document(collection = "tech")
+
+@Entity
 public class Tech {
 	
 	@Id private String _id;

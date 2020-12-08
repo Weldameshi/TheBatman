@@ -254,7 +254,6 @@ function createVehicle(){
 	clearVehiclesCreateData();
 }
 function createUser(){
-	var id = document.getElementById('user_create_id').value;
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var rawAuthorities = document.getElementsByName("authorities");
@@ -298,13 +297,6 @@ function deleteObject(objectType){
 	xmlHttp.setRequestHeader('Authorization', authHeaderValue);
 	xmlHttp.send();
 	clearAllSearchData();
-}
-function deleteUser(){
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("DELETE", "http://localhost:8080/user/" 
-	+ document.getElementById('user_delete_username').value, true);
-	xmlHttp.setRequestHeader('Content-type', 'application/json');
-	xmlHttp.send();
 }
 function getObjectById(objectType){
 	var xmlHttp = new XMLHttpRequest();
