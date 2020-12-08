@@ -23,6 +23,7 @@ public class UserRestController{
 	@RequestMapping(path="", method=RequestMethod.POST)
 	public String createUser(@RequestBody User user) {
 		user.setPassword(encoder.encode(user.getPassword()));
+		System.out.println(user.getAuthorities());
 		userRepository.save(user);
 		return user.get_id();
 		

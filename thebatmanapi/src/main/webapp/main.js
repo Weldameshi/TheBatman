@@ -259,15 +259,15 @@ function createUser(){
     var password = document.getElementById('password').value;
     var rawAuthorities = document.getElementsByName("authorities");
 
-	var authroities = [];
+	var authorities = [];
 	rawAuthorities.forEach((authority) => {
-		authroities.push(authority.value);
+		authorities.push(authority.value);
 	});
 	var user = {
 			"_id":id,
             "username": username,
             "password": password, 
-			"authorities": authroities
+			"authorities": authorities
 	}
 	
 	var xmlHttp = new XMLHttpRequest();

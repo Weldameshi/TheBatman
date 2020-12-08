@@ -34,7 +34,6 @@ public class User implements UserDetails{
 		this.authorities.addAll(Arrays.asList(authorities));
 	}
 	@Override
-	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities.stream()
 				.map(s -> new GrantedAuthority() {
