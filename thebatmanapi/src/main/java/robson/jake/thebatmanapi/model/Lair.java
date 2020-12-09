@@ -3,9 +3,12 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -18,9 +21,11 @@ public class Lair {
 	private int sqrft;
 	
 	@ManyToMany(mappedBy="lairs")
+	@JsonIgnore
 	private List<Person> peopleWhoLiveInLair = new ArrayList<Person>();
 	
-	private ArrayList<String> traps = new ArrayList<String>();
+	@ElementCollection
+	private List<String> traps = new ArrayList<String>();
 	
 	public String get_id() {
 		return _id;
@@ -44,6 +49,14 @@ public class Lair {
 
 	public void setSqrft(int sqrft) {
 		this.sqrft = sqrft;
+	}
+	@JsonIgnore
+	public List<Person> getPeopleWhoLiveInLair() {
+		return peopleWhoLiveInLair;
+	}
+
+	public void setPeopleWhoLiveInLair(List<Person> peopleWhoLiveInLair) {
+		this.peopleWhoLiveInLair = peopleWhoLiveInLair;
 	}
 
 	public ArrayList<String> getTraps() {

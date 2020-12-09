@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class TechRestController{
 		return tech.get_id();
 	}
 	@RequestMapping(path="", method=RequestMethod.PATCH)
+	@Transactional
 	public String updatePersonEntry(@RequestBody Tech tech) {
 		techRepository.deleteById(tech.get_id());
 		techRepository.save(tech);

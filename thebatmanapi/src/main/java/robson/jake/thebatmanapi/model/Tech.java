@@ -1,6 +1,7 @@
 package robson.jake.thebatmanapi.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ public class Tech {
 
 	private String name;
 	
-	private ArrayList<String> functions = new ArrayList<>();
+	private List<String> functions = new ArrayList<>();
 
 	public String get_id() {
 		return _id;

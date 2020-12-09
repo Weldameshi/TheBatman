@@ -3,15 +3,21 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import robson.jake.thebatmanapi.MyViews;
+
 @Entity
 public class Person{
 
-	@Id private String _id;
+	@Id 
+	private String _id;
 	
 	private String firstName;
 	
@@ -27,7 +33,8 @@ public class Person{
 	@OneToMany(mappedBy="person")
 	private List<Vehicle> vehicles = new ArrayList<>();
 	
-	private ArrayList<String> abilities = new ArrayList<>();
+	@ElementCollection
+	private List<String> abilities = new ArrayList<>();
 	
 	public String get_id() {
 		return _id;

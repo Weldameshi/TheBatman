@@ -1,9 +1,14 @@
 package robson.jake.thebatmanapi.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -16,9 +21,12 @@ public class Vehicle {
 	
 	private int mph;
 	
+	@ManyToOne
+	@JsonIgnore
 	private Person person;
 	
-	private ArrayList<String> capabilities = new ArrayList<>();
+	@ElementCollection
+	private List<String> capabilities = new ArrayList<>();
 	
 	public String get_id() {
 		return _id;
@@ -50,7 +58,7 @@ public class Vehicle {
 	public void setCapabilities(ArrayList<String> capabilities) {
 		this.capabilities = capabilities;
 	}
-
+	@JsonIgnore
 	public Person getPerson() {
 		return person;
 	}

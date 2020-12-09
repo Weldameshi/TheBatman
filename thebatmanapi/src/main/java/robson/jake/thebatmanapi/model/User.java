@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +28,7 @@ public class User implements UserDetails{
 	@Column(nullable=false)
 	private String password;
 	
+	@ElementCollection
 	private List<String> authorities = new ArrayList<>();
 	
 	public User() {}
@@ -36,7 +39,7 @@ public class User implements UserDetails{
 		this.authorities.addAll(Arrays.asList(authorities));
 	}
 	@Override
-	@JsonIgnore
+	@Transient
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities.stream()
 				.map(s -> new GrantedAuthority() {
@@ -60,21 +63,25 @@ public class User implements UserDetails{
 	}
 
 	@Override
+	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
+	@Transient
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
+	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
+	@Transient
 	public boolean isEnabled() {
 		return true;
 	}
