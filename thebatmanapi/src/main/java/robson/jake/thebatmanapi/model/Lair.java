@@ -3,35 +3,22 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-
-import robson.jake.thebatmanapi.MyViews;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Entity
+
+@Document(collection = "lair")
 public class Lair {
 
 	
 	@Id
-	@JsonView(MyViews.PersonView.class)
 	private String _id;
 	
-	@JsonView(MyViews.PersonView.class)
 	private String name;
 	
 	private int sqrft;
 	
-	@ManyToMany(mappedBy="lairs")
-	@JsonIgnore
-	private List<Person> peopleWhoLiveInLair = new ArrayList<Person>();
-	
-	@ElementCollection
 	private List<String> traps = new ArrayList<String>();
 	
 	public String get_id() {
@@ -57,15 +44,6 @@ public class Lair {
 	public void setSqrft(int sqrft) {
 		this.sqrft = sqrft;
 	}
-	@JsonIgnore
-	public List<Person> getPeopleWhoLiveInLair() {
-		return peopleWhoLiveInLair;
-	}
-
-	public void setPeopleWhoLiveInLair(List<Person> peopleWhoLiveInLair) {
-		this.peopleWhoLiveInLair = peopleWhoLiveInLair;
-	}
-
 	public List<String> getTraps() {
 		return traps;
 	}

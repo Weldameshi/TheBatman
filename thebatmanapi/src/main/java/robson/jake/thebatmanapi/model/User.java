@@ -3,21 +3,18 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "user")
 public class User{
 		
 	@Id
 	private String username;
 	
-	@Column(nullable=false)
 	private String password;
 	
-	@ElementCollection
 	private List<String> authorities = new ArrayList<>();
 	
 	public User() {}

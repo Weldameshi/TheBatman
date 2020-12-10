@@ -1,8 +1,6 @@
 package robson.jake.thebatmanapi.restcontrollers;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +45,7 @@ public class LairRestController{
 	}
 	@GetMapping(path = "/searchByName/{searchText}")
 	public List<Lair> searchByName(@PathVariable String searchText){
-		return lairRepository.queryByNameLike("%" + searchText + "%");
+		return lairRepository.findByNameLike("%" + searchText + "%");
 	}
 	@GetMapping(path= "/searchBySqrft/{sqrft}")
 	public List<Lair> searchBySquareFt(@PathVariable int sqrft){

@@ -3,45 +3,27 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
-import robson.jake.thebatmanapi.MyViews;
-
-@Entity
+@Document(collection = "people")
 public class Person{
 
 	@Id
-	@JsonView(MyViews.PersonView.class)
 	private String _id;
 	
-	@JsonView(MyViews.PersonView.class)
 	private String firstName;
 	
-	@JsonView(MyViews.PersonView.class)
 	private String lastName;
 	
-	@JsonView(MyViews.PersonView.class)
 	private String ailias;
 	
-	@JsonView(MyViews.PersonView.class)
 	private String classification;
 	
-	@ManyToMany
-	@JsonView(MyViews.PersonView.class)
-	private List<Lair> lairs = new ArrayList<>();
+	private List<String> lairsLivedIn = new ArrayList<>();
 	
-	@OneToMany(mappedBy="person")
-	@JsonView(MyViews.PersonView.class)
-	private List<Vehicle> vehicles = new ArrayList<>();
+	private List<String> vehiclesOwned = new ArrayList<>();
 	
-	@ElementCollection
-	@JsonView(MyViews.PersonView.class)
 	private List<String> abilities = new ArrayList<>();
 	
 	public String get_id() {
@@ -92,21 +74,23 @@ public class Person{
 		this.abilities = abilities;
 	}
 
-	public List<Lair> getLairs() {
-		return lairs;
+	public List<String> getLairsLivedIn() {
+		return lairsLivedIn;
 	}
 
-	public void setLairs(List<Lair> lairs) {
-		this.lairs = lairs;
+	public void setLairsLivedIn(List<String> lairsLivedIn) {
+		this.lairsLivedIn = lairsLivedIn;
 	}
 
-	public List<Vehicle> getVehicles() {
-		return vehicles;
+	public List<String> getVehiclesOwned() {
+		return vehiclesOwned;
 	}
 
-	public void setVehicles(List<Vehicle> vehicles) {
-		this.vehicles = vehicles;
+	public void setVehiclesOwned(List<String> vehiclesOwned) {
+		this.vehiclesOwned = vehiclesOwned;
 	}
+
+
 
 
 }

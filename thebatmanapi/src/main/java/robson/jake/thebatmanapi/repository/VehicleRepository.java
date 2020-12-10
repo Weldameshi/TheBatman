@@ -3,16 +3,12 @@ package robson.jake.thebatmanapi.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
+import org.springframework.data.mongodb.repository.MongoRepository;
 import robson.jake.thebatmanapi.model.Vehicle;
 
-public interface VehicleRepository extends JpaRepository<Vehicle, String>{
+public interface VehicleRepository extends MongoRepository<Vehicle, String>{
 	
-	@Query("SELECT l FROM Vehicle l Where l.name LIKE :searchText")
-	List<Vehicle> queryByNameLike(@Param("searchText") String searchText);
+	List<Vehicle> findByNameLike(String searchText);
 
 	List<Vehicle> findByMphIsGreaterThanEqual(int mph);
 }

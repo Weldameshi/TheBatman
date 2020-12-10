@@ -3,12 +3,11 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Entity
+@Document(collection = "tech")
 public class Tech {
 	
 	@Id private String _id;
@@ -16,7 +15,6 @@ public class Tech {
 	private String name;
 	
 	
-	@ElementCollection
 	private List<String> functions = new ArrayList<>();
 
 	public String get_id() {

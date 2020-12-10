@@ -1,8 +1,6 @@
 package robson.jake.thebatmanapi.restcontrollers;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
-import robson.jake.thebatmanapi.MyViews;
-import robson.jake.thebatmanapi.model.Lair;
 import robson.jake.thebatmanapi.model.Person;
-import robson.jake.thebatmanapi.model.Vehicle;
 import robson.jake.thebatmanapi.repository.PeopleRepository;
 
 
@@ -30,12 +23,6 @@ public class PeopleRestController{
 	
 	@Autowired
 	private PeopleRepository peopleRepository;
-	
-	@Autowired
-	private LairRestController lairRest;
-	
-	@Autowired
-	private VehicleRestController vehicleRest;
 	
 	@RequestMapping(path="", method=RequestMethod.POST)
 	public String createPersonEntry(@RequestBody Person person) {
@@ -51,23 +38,19 @@ public class PeopleRestController{
 	}
 
 	@RequestMapping(path="" , method=RequestMethod.GET)
-	@JsonView(MyViews.PersonView.class)
 	public List<Person> findAll(){
 		return peopleRepository.findAll();
 	}
 	
 	@RequestMapping(path="/{id}" , method=RequestMethod.GET)
-	@JsonView(MyViews.PersonView.class)
 	public Person findById(@PathVariable String id){
 		return peopleRepository.findById(id).get();
 	}
 	@GetMapping(path = "/searchByAilias/{searchText}")
-	@JsonView(MyViews.PersonView.class)
 	public List<Person> searchByAilias(@PathVariable String searchText){
-		return peopleRepository.queryByAiliasLike("%" + searchText + "%");
+		return peopleRepository.findByAiliasLike("%" + searchText + "%");
 	}
 	@GetMapping(path= "/searchByClassification/{searchText}")
-	@JsonView(MyViews.PersonView.class)
 	public List<Person> searchByClassification(@PathVariable String searchText){
 		return peopleRepository.findByClassificationLike("%" + searchText + "%");
 	}
@@ -81,8 +64,7 @@ public class PeopleRestController{
 	@Transactional
 	public void addLairPersonRelationship(@PathVariable String personId, @PathVariable String lairId) {
 		Person p = findById(personId);
-		Lair l = lairRest.findById(lairId);
-		p.getLairs().add(l);
+		p.getLairsLivedIn().add(lairId);
 		updatePersonEntry(p);
 	}
 	@PutMapping("/addVehicle/{personId}/{vehicleId}")
@@ -90,10 +72,8 @@ public class PeopleRestController{
 	@Transactional
 	public void addVehiclePersonRelationship(@PathVariable String personId, @PathVariable String vehicleId) {
 		Person p = peopleRepository.findById(personId).get();
-		System.out.println(p.get_id());
-		Vehicle v = vehicleRest.findById(vehicleId);
-		v.setPerson(p);
-		vehicleRest.updateVehicleEntry(v);
+		p.getVehiclesOwned().add(vehicleId);
+		updatePersonEntry(p);
 	}
 	
 }
