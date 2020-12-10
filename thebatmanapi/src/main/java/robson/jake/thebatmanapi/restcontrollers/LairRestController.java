@@ -28,13 +28,13 @@ public class LairRestController{
 		return lair.get_id();
 		
 	}
+	
 	@RequestMapping(path="", method=RequestMethod.PATCH)
 	@Transactional
 	public String updatePersonEntry(@RequestBody Lair lair) {
 		lairRepository.deleteById(lair.get_id());
 		lairRepository.save(lair);
 		return lair.get_id();
-		
 	}
 	
 	@RequestMapping(path="" , method=RequestMethod.GET)
@@ -42,13 +42,18 @@ public class LairRestController{
 		return lairRepository.findAll();
 	}
 	@RequestMapping(path="/{id}" , method=RequestMethod.GET)
-	public Optional<Lair> findById(@PathVariable String id){
-		return lairRepository.findById(id);
+	public Lair findById(@PathVariable String id){
+		return lairRepository.findById(id).get();
 	}
 	@GetMapping(path = "/searchByName/{searchText}")
 	public List<Lair> searchByName(@PathVariable String searchText){
-		return lairRepository.findByNameLike("%" + searchText + "%");
+		return lairRepository.queryByNameLike("%" + searchText + "%");
 	}
+	@GetMapping(path= "/searchBySqrft/{sqrft}")
+	public List<Lair> searchBySquareFt(@PathVariable int sqrft){
+		return lairRepository.findBySqrftIsGreaterThanEqual(sqrft);
+	}
+	
 	@RequestMapping(path="/{id}" , method=RequestMethod.DELETE)
 	public void deleteById(@PathVariable String id){
 		lairRepository.deleteById(id);

@@ -16,24 +16,32 @@ import robson.jake.thebatmanapi.MyViews;
 @Entity
 public class Person{
 
-	@Id 
+	@Id
+	@JsonView(MyViews.PersonView.class)
 	private String _id;
 	
+	@JsonView(MyViews.PersonView.class)
 	private String firstName;
 	
+	@JsonView(MyViews.PersonView.class)
 	private String lastName;
 	
+	@JsonView(MyViews.PersonView.class)
 	private String ailias;
 	
+	@JsonView(MyViews.PersonView.class)
 	private String classification;
 	
 	@ManyToMany
+	@JsonView(MyViews.PersonView.class)
 	private List<Lair> lairs = new ArrayList<>();
 	
 	@OneToMany(mappedBy="person")
+	@JsonView(MyViews.PersonView.class)
 	private List<Vehicle> vehicles = new ArrayList<>();
 	
 	@ElementCollection
+	@JsonView(MyViews.PersonView.class)
 	private List<String> abilities = new ArrayList<>();
 	
 	public String get_id() {
@@ -76,11 +84,11 @@ public class Person{
 		this.classification = classification;
 	}
 
-	public ArrayList<String> getAbilities() {
+	public List<String> getAbilities() {
 		return abilities;
 	}
 
-	public void setAbilities(ArrayList<String> abilities) {
+	public void setAbilities(List<String> abilities) {
 		this.abilities = abilities;
 	}
 

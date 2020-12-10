@@ -9,14 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import robson.jake.thebatmanapi.MyViews;
 
 
 @Entity
 public class Vehicle {
 	
-	@Id private String _id;
+	@Id
+	@JsonView(MyViews.PersonView.class)
+	private String _id;
 
-
+	@JsonView(MyViews.PersonView.class)
 	private String name;
 	
 	private int mph;
@@ -51,11 +56,11 @@ public class Vehicle {
 		this.mph = mph;
 	}
 
-	public ArrayList<String> getCapabilities() {
+	public List<String> getCapabilities() {
 		return capabilities;
 	}
 
-	public void setCapabilities(ArrayList<String> capabilities) {
+	public void setCapabilities(List<String> capabilities) {
 		this.capabilities = capabilities;
 	}
 	@JsonIgnore

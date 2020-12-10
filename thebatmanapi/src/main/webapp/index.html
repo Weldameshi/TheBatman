@@ -32,6 +32,7 @@
             <button onclick="showTechDiv();">Tech</button>
             <button onclick="showLairDiv();">Lairs</button>
             <button onclick="showVehicleDiv();">Vehicles</button>
+            <button onclick="showRelationshipDiv();">Relationships</button>
             <button onclick="showUserDiv();">Users</button>
             <br />
             <br />
@@ -50,6 +51,21 @@
 
                 <button onclick="getObjectById('people');">Search</button>
             </form>
+            <br />
+            <label>Search people by ailias</label>
+            <br>
+            <input type="text" id="people_search_ailias">
+            <br />
+
+            <button onclick="getFromQuery('people', 'ailias', 'searchByAilias');">Search</button>
+            <br />
+            <label>Search people by classification</label>
+            <br>
+            <input type="text" id="people_search_classification">
+            <br />
+
+            <button onclick="getFromQuery('people', 'classification', 'searchByClassification');">Search</button>
+            <br />
             <br />
             <form onsubmit="return false;">
                 <label>Add or Update Person</label>
@@ -103,6 +119,20 @@
                 <button onclick="getObjectById('tech');">Search</button>
             </form>
             <br />
+            <label>Search tech by name</label>
+            <br>
+            <input type="text" id="tech_search_name1">
+            <br />
+
+            <button onclick="getFromQuery('tech', 'name1', 'searchByName');">Search</button>
+            <br />
+            <label>Search tech by Exact name</label>
+            <br>
+            <input type="text" id="tech_search_name2">
+            <br />
+
+            <button onclick="getFromQuery('tech', 'name2', 'searchByNameExact');">Search</button>
+            <br />
             <form onsubmit="return false;">
                 <label>Add or Update Tech</label>
                 <br>
@@ -111,7 +141,7 @@
                 <br />
                 <input type="text" id="tech_name" placeholder="Name">
                 <br />
-                <br />
+                <br>
                 <button onclick="addListItem('functions');">Add Function</button>
                 <div id="functionsList">
                 </div>
@@ -138,13 +168,27 @@
             </div>
             <br />
             <form onsubmit="return false;">
-                <label>Search Lair by ID</label>
+                <label>Find Lair by ID</label>
                 <br>
                 <input type="text" id="lair_search_id">
                 <br />
 
                 <button onclick="getObjectById('lair');">Search</button>
             </form>
+            <br />
+                <label>Search Lair by Name</label>
+                <br>
+                <input type="text" id="lair_search_name">
+                <br />
+
+                <button onclick="getFromQuery('lair', 'name', 'searchByName');">Search</button>
+            <br />
+            <label>Search Lair by Square Footage Greater Than</label>
+            <br>
+            <input type="number" id="lair_search_sqrft">
+            <br />
+
+            <button onclick="getFromQuery('lair', 'sqrft', 'searchBySqrft');">Search</button>
             <br />
             <form onsubmit="return false;">
                 <label>Add or Update Lair</label>
@@ -162,7 +206,7 @@
                 <div id="trapsList">
                 </div>
                 <br />
-                <button onclick="createLair();">Create or Update Tech</button>
+                <button onclick="createLair();">Create or Update Trap</button>
                 <br />
                 <br />
             </form>
@@ -192,6 +236,20 @@
                 <button onclick="getObjectById('vehicle');">Search</button>
             </form>
             <br />
+            <label>Search Vehicle by Name</label>
+            <br>
+            <input type="text" id="vehicle_search_name">
+            <br />
+
+            <button onclick="getFromQuery('vehicle', 'name', 'searchByName');">Search</button>
+        <br />
+        <label>Search Vehicle by MPH Greater Than</label>
+        <br>
+        <input type="number" id="vehicle_search_mph">
+        <br />
+
+        <button onclick="getFromQuery('vehicle', 'mph', 'searchByMph');">Search</button>
+        <br />
             <form onsubmit="return false;">
                 <label>Add or Update Vehicle</label>
                 <br>
@@ -244,6 +302,23 @@
             <br />
             <br />
             </div>
+        <div id="relationship_div" style="display: none;">
+            <label>Person Lives in Lair</label>
+            <br>
+            <input type='text' id='person_relationship' placeholder="Person">
+            <br>
+            <input type='text' id='lair_relationship' placeholder="Lair"/>
+            <br>
+        <button onclick="personLivesInLair();">create person-lair relationship</button>
+        <br>
+        <label>Person owns vehicle</label>
+        <br>
+        <input type='text' id='person_owns_vehicle' placeholder="Person">
+        <br>
+        <input type='text' id='vehicle_owned_by_person' placeholder="Vehicle"/>
+        <br>
+        <button onclick="personLivesInVehicle();">create person-vehicle relationship</button>
+        </div>
     </div>
 </body>
 

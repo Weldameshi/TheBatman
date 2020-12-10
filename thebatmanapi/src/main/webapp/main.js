@@ -4,6 +4,7 @@ function showPeopleDiv(){
     document.getElementById('tech_div').style.display = "none";
     document.getElementById('user_div').style.display = "none";
 	document.getElementById('people_div').style.display = "block";
+	document.getElementById('relationship_div').style.display = "none";
 	clearAllCreateData();
 	clearAllSearchData();
 }
@@ -13,6 +14,7 @@ function showTechDiv(){
     document.getElementById('tech_div').style.display = "block";
 	document.getElementById('people_div').style.display = "none";
 	document.getElementById('user_div').style.display = "none";
+	document.getElementById('relationship_div').style.display = "none";
 	clearAllCreateData();
 	clearAllSearchData();
 }
@@ -22,6 +24,7 @@ function showLairDiv(){
     document.getElementById('tech_div').style.display = "none";
 	document.getElementById('people_div').style.display = "none";
 	document.getElementById('user_div').style.display = "none";
+	document.getElementById('relationship_div').style.display = "none";
 	clearAllCreateData();
 	clearAllSearchData();
 }
@@ -31,7 +34,7 @@ function showVehicleDiv(){
     document.getElementById('tech_div').style.display = "none";
 	document.getElementById('people_div').style.display = "none";
 	document.getElementById('user_div').style.display = "none";
-
+	document.getElementById('relationship_div').style.display = "none";
 	clearAllCreateData();
 	clearAllSearchData();
 }
@@ -41,7 +44,17 @@ function showUserDiv(){
     document.getElementById('tech_div').style.display = "none";
 	document.getElementById('people_div').style.display = "none";
 	document.getElementById('user_div').style.display = "block";
-
+	document.getElementById('relationship_div').style.display = "none";
+	clearAllCreateData();
+	clearAllSearchData();
+}
+function showRelationshipDiv(){
+	document.getElementById('vehicle_div').style.display = "none";
+    document.getElementById('lair_div').style.display = "none";
+    document.getElementById('tech_div').style.display = "none";
+	document.getElementById('people_div').style.display = "none";
+	document.getElementById('user_div').style.display = "none";
+	document.getElementById('relationship_div').style.display = "block";
 	clearAllCreateData();
 	clearAllSearchData();
 }
@@ -51,6 +64,7 @@ function showNoDiv(){
     document.getElementById('tech_div').style.display = "none";
 	document.getElementById('people_div').style.display = "none";
 	document.getElementById('user_div').style.display = "none";
+	document.getElementById('relationship_div').style.display = "none";
 
 	clearAllCreateData();
 	clearAllSearchData();
@@ -102,6 +116,7 @@ function clearAllCreateData(){
 	clearTechCreateData();
 	clearVehiclesCreateData();
 	clearUserCreateData();
+	clearRelationshipCreateData();
 }
 function clearPersonCreateData(){
 	document.getElementById('person_create_id').value = "";
@@ -130,10 +145,15 @@ function clearVehiclesCreateData(){
     document.getElementById("capabilitiesList").innerHTML = "";
 }
 function clearUserCreateData(){
-	document.getElementById('user_create_id').value = "";
 	document.getElementById('username').value = "";
 	document.getElementById('password').value = "";
-	document.getElementById('authoritiesList').value = "";
+	document.getElementById('authoritiesList').innerHTML = "";
+}
+function clearRelationshipCreateData(){
+	document.getElementById('person_relationship').value = "";
+	document.getElementById('lair_relationship').value = "";
+	document.getElementById('person_owns_vehicle').value = "";
+	document.getElementById('vehicle_owned_by_person').value = "";
 }
 function clearAllSearchData(){
 	document.getElementById("people_list").innerHTML = "";
@@ -263,7 +283,6 @@ function createUser(){
 		authroities.push(authority.value);
 	});
 	var user = {
-			"_id":id,
             "username": username,
             "password": password, 
 			"authorities": authroities
@@ -328,7 +347,6 @@ function addListItem(listType){
 	var div = document.getElementById(listType + 'List');
 	div.innerHTML += "<input type=\"text\" name=\"" + listType +"\"><br>";
 }
-
 function login(){
 	var username = document.getElementById('login_username').value
 	var password = document.getElementById('login_password').value
@@ -345,4 +363,53 @@ document.getElementById("login").style.display = "block";
 document.getElementById("buttons").style.display = "none";
 showNoDiv();
 }
-  
+function getLairByName(){
+	var searchText = document.getElementById("lair_search_name").value; 
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+			var ob = JSON.parse(this.responseText);
+			printObject(ob, "lair");
+		}
+	}
+	xmlHttp.open("GET", "http://localhost:8080/lair/searchByName/" + searchText);
+	xmlHttp.send();
+}
+function getFromQuery(objectType , elementType, methodName){
+	var searchText = document.getElementById(objectType + "_search_" + elementType).value; 
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+			var ob = JSON.parse(this.responseText);
+			console.log(ob);
+			printObject(ob, objectType);
+			
+		}
+	}
+	xmlHttp.open("GET", "http://localhost:8080/" + objectType +"/" + methodName +"/" + searchText);
+	xmlHttp.send();
+}
+function personLivesInLair(){
+	var person = document.getElementById("person_relationship").value;
+	var lair = document.getElementById("lair_relationship").value;
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+			var ob = JSON.parse(this.responseText);
+		}
+	}
+	xmlHttp.open("PUT", "http://localhost:8080/people/addLair/" + person + "/" + lair);
+	xmlHttp.send();
+}
+function personLivesInVehicle(){
+	var person = document.getElementById("person_owns_vehicle").value;
+	var vehicle = document.getElementById("vehicle_owned_by_person").value;
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+			var ob = JSON.parse(this.responseText);
+		}
+	}
+	xmlHttp.open("PUT", "http://localhost:8080/people/addVehicle/" + person + "/" + vehicle);
+	xmlHttp.send();
+}

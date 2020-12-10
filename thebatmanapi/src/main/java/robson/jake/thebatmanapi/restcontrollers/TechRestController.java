@@ -5,12 +5,17 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import robson.jake.thebatmanapi.MyViews;
+import robson.jake.thebatmanapi.model.Person;
 import robson.jake.thebatmanapi.model.Tech;
 import robson.jake.thebatmanapi.repository.TechRepository;
 
@@ -41,6 +46,14 @@ public class TechRestController{
 	@RequestMapping(path="/{id}" , method=RequestMethod.GET)
 	public Optional<Tech> findById(@PathVariable String id){
 		return techRepository.findById(id);
+	}
+	@GetMapping(path = "/searchByName/{searchText}")
+	public List<Tech> searchByName(@PathVariable String searchText){
+		return techRepository.queryByNameLike("%" + searchText + "%");
+	}
+	@GetMapping(path= "/searchByNameExact/{searchText}")
+	public List<Tech> searchByNameExact(@PathVariable String searchText){
+		return techRepository.findByName(searchText);
 	}
 	@RequestMapping(path="/{id}" , method=RequestMethod.DELETE)
 	public void deleteById(@PathVariable String id){

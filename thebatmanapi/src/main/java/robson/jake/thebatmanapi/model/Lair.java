@@ -9,13 +9,20 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import robson.jake.thebatmanapi.MyViews;
 
 
 @Entity
 public class Lair {
 
-	@Id private String _id;
 	
+	@Id
+	@JsonView(MyViews.PersonView.class)
+	private String _id;
+	
+	@JsonView(MyViews.PersonView.class)
 	private String name;
 	
 	private int sqrft;
@@ -59,7 +66,7 @@ public class Lair {
 		this.peopleWhoLiveInLair = peopleWhoLiveInLair;
 	}
 
-	public ArrayList<String> getTraps() {
+	public List<String> getTraps() {
 		return traps;
 	}
 

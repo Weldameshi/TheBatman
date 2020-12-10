@@ -3,6 +3,7 @@ package robson.jake.thebatmanapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -14,6 +15,8 @@ public class Tech {
 
 	private String name;
 	
+	
+	@ElementCollection
 	private List<String> functions = new ArrayList<>();
 
 	public String get_id() {
@@ -32,12 +35,13 @@ public class Tech {
 		this.name = name;
 	}
 
-	public ArrayList<String> getFunctions() {
+	public List<String> getFunctions() {
 		return functions;
 	}
 
-	public void setFunctions(ArrayList<String> functions) {
+	public void setFunctions(List<String> functions) {
 		this.functions = functions;
 	}
+
 
 }

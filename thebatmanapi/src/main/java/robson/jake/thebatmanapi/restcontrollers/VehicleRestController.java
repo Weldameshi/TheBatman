@@ -5,12 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import robson.jake.thebatmanapi.model.Lair;
 import robson.jake.thebatmanapi.model.Vehicle;
 import robson.jake.thebatmanapi.repository.VehicleRepository;
 
@@ -31,7 +33,6 @@ public class VehicleRestController{
 	@RequestMapping(path="", method=RequestMethod.PATCH)
 	@Transactional
 	public String updateVehicleEntry(@RequestBody Vehicle vehicle) {
-		vehicleRepository.deleteById(vehicle.get_id());
 		vehicleRepository.save(vehicle);
 		return vehicle.get_id();
 		
@@ -43,8 +44,16 @@ public class VehicleRestController{
 	}
 	
 	@RequestMapping(path="/{id}" , method=RequestMethod.GET)
-	public Optional<Vehicle> findById(@PathVariable String id){
-		return vehicleRepository.findById(id);
+	public Vehicle findById(@PathVariable String id){
+		return vehicleRepository.findById(id).get();
+	}
+	@GetMapping(path = "/searchByName/{searchText}")
+	public List<Vehicle> searchByName(@PathVariable String searchText){
+		return vehicleRepository.queryByNameLike("%" + searchText + "%");
+	}
+	@GetMapping(path= "/searchByMph/{mph}")
+	public List<Vehicle> searchByMph(@PathVariable int mph){
+		return vehicleRepository.findByMphIsGreaterThanEqual(mph);
 	}
 	
 	@RequestMapping(path="/{id}" , method=RequestMethod.DELETE)
