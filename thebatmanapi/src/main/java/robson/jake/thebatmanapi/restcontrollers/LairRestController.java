@@ -45,7 +45,7 @@ public class LairRestController{
 	}
 	@GetMapping(path = "/searchByName/{searchText}")
 	public List<Lair> searchByName(@PathVariable String searchText){
-		return lairRepository.findByNameLike("%" + searchText + "%");
+		return lairRepository.findByNameLike(searchText);
 	}
 	@GetMapping(path= "/searchBySqrft/{sqrft}")
 	public List<Lair> searchBySquareFt(@PathVariable int sqrft){

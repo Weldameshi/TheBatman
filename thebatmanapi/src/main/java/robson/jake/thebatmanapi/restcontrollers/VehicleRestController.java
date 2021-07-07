@@ -49,7 +49,7 @@ public class VehicleRestController{
 	}
 	@GetMapping(path = "/searchByName/{searchText}")
 	public List<Vehicle> searchByName(@PathVariable String searchText){
-		return vehicleRepository.findByNameLike("%" + searchText + "%");
+		return vehicleRepository.findByNameLike(searchText);
 	}
 	@GetMapping(path= "/searchByMph/{mph}")
 	public List<Vehicle> searchByMph(@PathVariable int mph){

@@ -45,7 +45,7 @@ public class TechRestController{
 	}
 	@GetMapping(path = "/searchByName/{searchText}")
 	public List<Tech> searchByName(@PathVariable String searchText){
-		return techRepository.findByNameLike("%" + searchText + "%");
+		return techRepository.findByNameLike(searchText);
 	}
 	@GetMapping(path= "/searchByNameExact/{searchText}")
 	public List<Tech> searchByNameExact(@PathVariable String searchText){

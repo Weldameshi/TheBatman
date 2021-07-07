@@ -48,11 +48,11 @@ public class PeopleRestController{
 	}
 	@GetMapping(path = "/searchByAilias/{searchText}")
 	public List<Person> searchByAilias(@PathVariable String searchText){
-		return peopleRepository.findByAiliasLike("%" + searchText + "%");
+		return peopleRepository.findByAiliasLike(searchText);
 	}
 	@GetMapping(path= "/searchByClassification/{searchText}")
 	public List<Person> searchByClassification(@PathVariable String searchText){
-		return peopleRepository.findByClassificationLike("%" + searchText + "%");
+		return peopleRepository.findByClassificationLike(searchText);
 	}
 	
 	@RequestMapping(path="/{id}" , method=RequestMethod.DELETE)
